@@ -1,15 +1,19 @@
 import { Router } from "express";
 import { addRecipe, getRecipes, getRecipe, updateRecipe, deleteRecipe } from "./controllers/recipes.controller.js";
+import multer from "multer";
+
+// configure upload middleware
+const upload = multer({ dest: 'uploads' })
+
+// create recipes router
+const router = Router()
 
 
- const router = Router()
- 
+router.post('/recipes', upload.single('image'), addRecipe)
 
-router.post('/recipes', addRecipe,)
+router.get('/recipes', getRecipes)
 
-router.get('/recipes', getRecipes )
-
-router.get('/recipes/:id', getRecipe )
+router.get('/recipes/:id', getRecipe)
 
 router.patch('/recipes/:id', updateRecipe)
 

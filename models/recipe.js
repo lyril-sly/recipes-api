@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 const recipeScheme = new Schema({
-    title: {type: String, require: true},
-    description: {type: String, require: true},
-    image: {type: String, require: true},
+    title: {type: String, required: true},
+    description: {type: String, required: true},
+    image: {type: String, required: true},
     country: {type: String}
 })
 

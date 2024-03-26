@@ -1,17 +1,40 @@
 import {recipeModel} from '../models/recipe.js'
 
 
-export const addRecipe =  async (req, res) => {
- const createResult = await   recipeModel.create(req.body)
- res.json(createResult)
+export const addRecipe =  async (req, res, next) => {
+try {
+    console.log(req.body)
+     const createResult = await recipeModel.create({
+        ...req.body,
+        image: req.file.filename
+     })
+     res.status(201).json(createResult)
+} catch (error) {
+    // forward to express error handler
+    next(error)
+}
 }
 
-export const getRecipes = (req, res) => {
-    res.send('get recipes')
+export const getRecipes = async (req, res, next) => {
+   try {
+    const findResult = await recipeModel.find()
+    res.json(findResult)
+     
+   } catch (error) {
+    next(error)
+   }
 }
 
-export const getRecipe = (req, res) => {
-    res.send('get an id')
+export const getRecipe = async (req, res, next) => {
+    try {
+        const findResult = await recipeModel.findById(req.params.id)
+        if(findResult === null){
+       return res.status(404).json({message: `Recipe with id ${findResult}`})
+    } 
+    } catch (error) {
+        next(error)
+    }
+    
 }
 
 export const updateRecipe =  (req, res) => {

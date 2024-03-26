@@ -12,11 +12,11 @@ app.use(express.urlencoded( {extended: false}))
 app.use(cors())
 const PORT = process.env.PORT || 9000
 
-app.use(router)
+
 
 // make database connection
 await mongoose.connect(process.env.MONGOOSE_URL)
-
+app.use(router)
 app.listen(PORT, () => {
     console.log(`your express app is running ${PORT}`)
 })
